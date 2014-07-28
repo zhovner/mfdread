@@ -33,7 +33,7 @@ Bytes 6, 7, 8 are access data
 FF 07 80  
 
 Binary representation:  
-**1**111(1)111 = FF  
+(1)111(1)111 = FF  
 (0)000(0)111 = 07  
 (1)000(0)000 = 80  
 
