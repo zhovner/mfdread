@@ -13,25 +13,24 @@ Included ```dump.mfd``` -- Mifare 4k dump for testing.
 ![Mifare mfd dump parser](https://zhovner.com/forever/mfdread.png)
 
 The total memory of 1024 bytes in Mifare Classic (1k) and 4095 bytes in Mifare 4k is divided into 16 sectors of 64 bytes, each of the sectors is divided into 4 blocks of 16 bytes. Blocks 0, 1 and 2 of each sector can store data and block 3 is used to store keys and access bits (the exception is the ‘Manufacturer Block’ which can not store data).
-
 ![Mifare memory structure](https://zhovner.com/forever/MiFare_Memory_Structure.png)
 
 The memory of 1KB and 4KB MIFARE Classic cards is ordered in a similar way. On both cards the first block (block 0) contains the UID, BCC, SAK, ATQA and Manufacturer data. This block is locked and cannot be altered. But some times it can be ;)
-
 ![Mifare zero block structure](https://zhovner.com/forever/0blockmifare.gif)
 
-
+##### Access bits
 Access bits define the way the data in the sector trailer and the data blocks can be accessed. Access bits are stored twice – inverted and non-inverted in the sector trailer as shown in the images.
-
 ![Mifare zero block structure](https://zhovner.com/forever/MiFare_Access_Bits.gif)
 
 Some examples:
 
-```Data stored in the sector trailer:
+Data stored in the sector trailer:
 01 02 03 04 05 06 FF 07 80 69 11 12 13 14 15 16
 01 02 03 04 05 06 – Key A
 FF 07 80 69 – Access bits
 11 12 13 14 15 16 – Key B (or data if Key B is not used)
+qwe qw eqw eqwe qwe qwe qwe qwe qwe qwe qwe 
+ qwe qwe qwe qwe qw qwe qwe
 
 Bytes 6, 7, 8 are access data
 FF 07 80
