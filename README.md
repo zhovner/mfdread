@@ -27,7 +27,7 @@ Access bits define the way the data in the sector trailer and the data blocks ca
 
 Some examples:
 
-Data stored in the sector trailer:
+```Data stored in the sector trailer:
 01 02 03 04 05 06 FF 07 80 69 11 12 13 14 15 16
 01 02 03 04 05 06 – Key A
 FF 07 80 69 – Access bits
@@ -37,9 +37,10 @@ Bytes 6, 7, 8 are access data
 FF 07 80
 
 Binary representation:
-**1**111**1**111 = FF
-**0**000**0**111 = 07
-**1**000**0**000 = 80
+
+(1)111(1)111 = FF
+(0)000(0)111 = 07
+(1)000(0)000 = 80```
 
 The bits that are bolded and underscored are the ones that define access to keys (C13, C23, C33 in the image above) and they form the 001 sequence. The bits that are bolded and not underscored are the same bits inverted. They form, as expected, the sequence 110.
 
