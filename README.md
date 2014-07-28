@@ -18,6 +18,8 @@ The memory of 1KB and 4KB MIFARE Classic cards is ordered in a similar way. On b
 
 ![Mifare zero block structure](https://zhovner.com/forever/0blockmifare.gif)
 
+![Mifare memory structure](https://zhovner.com/forever/MiFare_Memory_Structure.png)
+
 Abbreviation  | Meaning 
 ------------- | -------------
 UID  | Unique Identifier, Type A
@@ -25,7 +27,7 @@ NUID  | Non-Unique Identifier
 ATQA  | Answer To Request acc. to ISO/IEC 14443-4
 SAK  | Select Acknowledge, Type A
 ATS  | Answer To Select acc. to ISO/IEC 14443-4
-ATR  | Anser To Reset
+ATR  | Anser To Reset [What's really ATR means](#ATR)
 DIF  | Dual Interface (cards)
 COS  | Card Operating System
 CL  | Cascade Level acc. to ISO/IEC 14443-3
@@ -41,8 +43,21 @@ RFU  | Reserved for future use
 
 
 
-### <a name="ATR"></a>A Heading in this SO entry!
+### <a name="ATR"></a>What's really ATR means:
+ATR is for contact cards and is specified in ISO 7816. For contacless cards, it is the PC/SC reader (IFD) that generates the ATR.
 
-and we can even [link](#ATR) to it so:
+The ATR is constructed based on:
+
+ATS (Answer to Select) for ISO 14443 Type A cards
+ATQB and ATTRIB bytes for ISO 14443 Type B cards
+The ATR will be of the form 3B 8X 80 01 HB_ATS Parity_Byte where X is the number of bytes of Historical Bytes of ATS (HB_ATS).
+
+The exact construction of ATR for contactless cards is given in section 3.1.3.2.3 of the PC/SC spec.
+
+Given that the only variable is ATS, it should be the same regardless of the reader.
+
+
+
+
 
 
