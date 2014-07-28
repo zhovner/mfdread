@@ -1,12 +1,11 @@
 Mifare dumps parser 
 =======
 
-Mifare Classic 1k and 4k dumps parser in human readable format. 
-Dumps can be grabbed by mfoc or nfc-mfclassic tools from libnfc.org
-Dump file size must be 4096 bytes.
+Mifare Classic 1k and 4k dumps parser in human readable format.  
+Dumps can be grabbed by mfoc or nfc-mfclassic tools from libnfc.org  
+Dump file size must be 4096 bytes.  
 
-Included ```dump.mfd``` -- Mifare 4k dump for testing.
-
+Included ```dump.mfd``` -- Mifare 4k dump for testing.  
 #### Usage:
 ```mfdread.py ./dump.mfd```
 
@@ -24,28 +23,25 @@ Access bits define the way the data in the sector trailer and the data blocks ca
 
 Some examples:
 
-Data stored in the sector trailer:
-01 02 03 04 05 06 FF 07 80 69 11 12 13 14 15 16
-01 02 03 04 05 06 – Key A
-FF 07 80 69 – Access bits
-11 12 13 14 15 16 – Key B (or data if Key B is not used)
-qwe qw eqw eqwe qwe qwe qwe qwe qwe qwe qwe 
- qwe qwe qwe qwe qw qwe qwe
+Data stored in the sector trailer:  
+01 02 03 04 05 06 FF 07 80 69 11 12 13 14 15 16  
+01 02 03 04 05 06 – Key A  
+FF 07 80 69 – Access bits  
+11 12 13 14 15 16 – Key B (or data if Key B is not used)  
 
-Bytes 6, 7, 8 are access data
-FF 07 80
+Bytes 6, 7, 8 are access data  
+FF 07 80  
 
-Binary representation:
-
-(1)111(1)111 = FF
-(0)000(0)111 = 07
-(1)000(0)000 = 80```
+Binary representation:  
+(1)111(1)111 = FF  
+(0)000(0)111 = 07  
+(1)000(0)000 = 80  
 
 The bits that are bolded and underscored are the ones that define access to keys (C13, C23, C33 in the image above) and they form the 001 sequence. The bits that are bolded and not underscored are the same bits inverted. They form, as expected, the sequence 110.
 
 From the table above I can see that 001 means that Key A can not be read, but can be written and Key B may be read. This is the "transport configuration" and was read from the card that was never used.
 
-
+#### Terms
 Abbreviation  | Meaning 
 ------------- | -------------
 UID  | Unique Identifier, Type A
