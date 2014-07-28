@@ -11,3 +11,38 @@ Included ```dump.mfd``` -- Mifare 4k dump for testing.
 ```mfdread.py ./dump.mfd```
 
 ![Mifare mfd dump parser](https://zhovner.com/forever/mfdread.png)
+
+The total memory of 1024 bytes in Mifare Classic (1k) and 4095 bytes in Mifare 4k is divided into 16 sectors of 64 bytes, each of the sectors is divided into 4 blocks of 16 bytes. Blocks 0, 1 and 2 of each sector can store data and block 3 is used to store keys and access bits (the exception is the ‘Manufacturer Block’ which can not store data).
+
+The memory of 1KB and 4KB MIFARE Classic cards is ordered in a similar way. On both cards the first block (block 0) contains the UID, BCC, SAK, ATQA and Manufacturer data. This block is locked and cannot be altered. But some times it can be ;)
+
+![Mifare zero block structure](https://zhovner.com/forever/0blockmifare.gif)
+
+Abbreviation  | Meaning 
+------------- | -------------
+UID  | Unique Identifier, Type A
+NUID  | Non-Unique Identifier
+ATQA  | Answer To Request acc. to ISO/IEC 14443-4
+SAK  | Select Acknowledge, Type A
+ATS  | Answer To Select acc. to ISO/IEC 14443-4
+ATR  | Anser To Reset
+DIF  | Dual Interface (cards)
+COS  | Card Operating System
+CL  | Cascade Level acc. to ISO/IEC 14443-3
+CT  | Cascade Tag, Type A
+NFC  | Near Field Communication
+PCD  | Proximity Coupling Device (“Contactless Reader”)
+PICC  | Proximity Integrated Circuit (“Contactless Card”)
+PKE  | Public Key Encryption (like RSA or ECC)
+REQA  | Request Command, Type A
+Select  | Select Command, Type A
+RID  | Random ID, typically dynamically generated at Power-on Reset (UID0 = “0x08”, Random number in UID1… UID3)
+RFU  | Reserved for future use
+
+
+
+### <a name="ATR"></a>A Heading in this SO entry!
+
+and we can even [link](#ATR) to it so:
+
+
