@@ -14,11 +14,11 @@ Included ```dump.mfd``` -- Mifare 4k dump for testing.
 
 The total memory of 1024 bytes in Mifare Classic (1k) and 4095 bytes in Mifare 4k is divided into 16 sectors of 64 bytes, each of the sectors is divided into 4 blocks of 16 bytes. Blocks 0, 1 and 2 of each sector can store data and block 3 is used to store keys and access bits (the exception is the ‘Manufacturer Block’ which can not store data).
 
+![Mifare memory structure](https://zhovner.com/forever/MiFare_Memory_Structure.png)
+
 The memory of 1KB and 4KB MIFARE Classic cards is ordered in a similar way. On both cards the first block (block 0) contains the UID, BCC, SAK, ATQA and Manufacturer data. This block is locked and cannot be altered. But some times it can be ;)
 
 ![Mifare zero block structure](https://zhovner.com/forever/0blockmifare.gif)
-
-![Mifare memory structure](https://zhovner.com/forever/MiFare_Memory_Structure.png)
 
 Abbreviation  | Meaning 
 ------------- | -------------
