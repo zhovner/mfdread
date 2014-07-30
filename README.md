@@ -52,6 +52,7 @@ ATQA  | Answer To Request acc. to ISO/IEC 14443-4
 SAK  | Select Acknowledge, Type A
 ATS  | Answer To Select acc. to ISO/IEC 14443-4
 ATR  | Anser To Reset [What's really ATR means](#ATR)
+APDU  | Application Protocol Data Unit
 DIF  | Dual Interface (cards)
 COS  | Card Operating System
 CL  | Cascade Level acc. to ISO/IEC 14443-3
