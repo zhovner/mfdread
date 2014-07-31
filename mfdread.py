@@ -35,8 +35,18 @@ class bashcolors:
 def print_info(data):
 
     blocksmatrix = []
+
+    # determine what dump we get 1k or 4k
+    if len(data) == 4096:
+        cardsize = 64
+    elif len(data) == 1024:
+        cardsize = 16
+    else: 
+        print "Wrong file size: %d bytes.\nOnly 1024 or 4096 allowed." % len(data)
+        sys.exit();
+
     # read all sectors
-    for i in range(0, 64):
+    for i in range(0, cardsize):
         start = i * 64
         end   = (i + 1) * 64
         sector = data[start:end]
@@ -50,6 +60,7 @@ def print_info(data):
         keyB =  bashcolors.BLUE + blocksmatrix[c][3][20:32] + bashcolors.ENDC
         blocksmatrix[c][3] = keyA + accbits + keyB
 
+    print "File size: %d bytes. Expected %d sectors" %(len(data),cardsize)
     print "\n\tUID:  " + blocksmatrix[0][0][0:8]
     print "\tBCC:  " + blocksmatrix[0][0][8:10]
     print "\tSAK:  " + blocksmatrix[0][0][10:12]
@@ -74,7 +85,7 @@ def print_info(data):
 
 def main(filename):
     with open(filename, "rb") as f:
-        data = f.read(4096)
+        data = f.read()
         print_info(data)
  
 if __name__ == "__main__":
