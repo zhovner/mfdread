@@ -35,9 +35,9 @@ Bytes 6, 7, 8 are access data
 FF 07 80  
 
 Binary representation:  
-*1*111*1*111 = FF  
-*(0)*000*0*111 = 07  
-*(1)*000*(0)*000 = 80  
+**1**111**1**111 = FF  
+**(0)**000**0**111 = 07  
+**(1)**000**(0)**000 = 80  
 
 The bits that are bolded and in parentheses are the ones that define access to keys (C13, C23, C33 in the image above) and they form the 001 sequence. The bits that are bolded and not in parentheses are the same bits inverted. They form, as expected, the sequence 110.
 
