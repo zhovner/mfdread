@@ -16,7 +16,7 @@ Included ```dump.mfd``` -- Mifare 4k dump for testing.
 The total memory of 1024 bytes in Mifare Classic (1k) and 4096 bytes in Mifare 4k is divided into 16 sectors of 64 bytes, each of the sectors is divided into 4 blocks of 16 bytes. Blocks 0, 1 and 2 of each sector can store data and block 3 is used to store keys and access bits (the exception is the ‘Manufacturer Block’ which can not store data).
 ![Mifare memory structure](https://zhovner.com/forever/MiFare_Memory_Structure.png)
 
-The memory of 1KB and 4KB MIFARE Classic cards is ordered in a similar way. On both cards the first block (block 0) contains the UID, BCC, SAK, ATQA and Manufacturer data. This block is locked and cannot be altered. But some times it can be ;)
+The memory of 1KB and 4KB MIFARE Classic cards is ordered in a similar way. On both cards the first block (block 0) contains the UID, BCC, SAK, ATQA and Manufacturer data. This block is locked and cannot be altered. But some times it can be ;)  
 ![Mifare zero block structure](https://zhovner.com/forever/0blockmifare.gif)
 
 ##### Access bits
@@ -35,11 +35,11 @@ Bytes 6, 7, 8 are access data
 FF 07 80  
 
 Binary representation:  
-(1)111(1)111 = FF  
-(0)000(0)111 = 07  
-(1)000(0)000 = 80  
+*1*111*1*111 = FF  
+*(0)*000*0*111 = 07  
+*(1)*000*(0)*000 = 80  
 
-The bits that are bolded and underscored are the ones that define access to keys (C13, C23, C33 in the image above) and they form the 001 sequence. The bits that are bolded and not underscored are the same bits inverted. They form, as expected, the sequence 110.
+The bits that are bolded and in parentheses are the ones that define access to keys (C13, C23, C33 in the image above) and they form the 001 sequence. The bits that are bolded and not in parentheses are the same bits inverted. They form, as expected, the sequence 110.
 
 From the table above I can see that 001 means that Key A can not be read, but can be written and Key B may be read. This is the "transport configuration" and was read from the card that was never used.
 
