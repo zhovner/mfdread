@@ -43,6 +43,9 @@ The bits that are bolded and in parentheses are the ones that define access to k
 
 From the table above I can see that 001 means that Key A can not be read, but can be written and Key B may be read. This is the "transport configuration" and was read from the card that was never used.
 
+Another example where access bits 6,7,8 are 0x78 0x77 0x88  
+![mifare access bits explanation](http://i.imgur.com/zTKl6j3.png)
+
 #### Terms
 Abbreviation  | Meaning 
 ------------- | -------------
