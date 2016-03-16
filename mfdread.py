@@ -51,7 +51,9 @@ def print_info(data):
         start = i * 64
         end   = (i + 1) * 64
         sector = data[start:end]
-        sector = codecs.encode(sector, 'hex').decode('ascii')
+        sector = codecs.encode(sector, 'hex')
+        if not type(sector) is str:
+            sector = str(sector, 'ascii')
         blocksmatrix.append([sector[x:x+32] for x in range(0, len(sector), 32)])
 
     # add colors for each keyA, access bits, KeyB
