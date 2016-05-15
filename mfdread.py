@@ -35,9 +35,9 @@ class bashcolors:
 
 def accbits_for_blocknum(accbits_str, blocknum):
     '''
-    Decodes the access bit string for block number blocknum.
+    Decodes the access bit string for block "blocknum".
     Returns the three access bits for the block or False if the
-    inverted bis do not match the access bits.
+    inverted bits do not match the access bits.
     '''
     bits = BitArray([0])
     inverted = BitArray([0])
@@ -59,7 +59,7 @@ def accbits_for_blocknum(accbits_str, blocknum):
         bits = BitArray([accbits_str[8], accbits_str[20], accbits_str[16]])
         inverted = BitArray([accbits_str[4], accbits_str[0], accbits_str[12]])
 
-    # Check the access bits for the block and the inverted ones.
+    # Check the decoded bits
     inverted.invert()
     if bits.bin == inverted.bin:
         return bits
@@ -71,11 +71,11 @@ def accbits_for_blocknum(accbits_str, blocknum):
 
 def accbit_info(accbits):
     '''
-    Returns the a dictionary of the three access bits for all three blocks in the sector.
-    If the access bits for block could not be decoded properly it is set to False.
+    Returns  a dictionary of a access bits for all three blocks in a sector.
+    If the access bits for block could not be decoded properly, the value is set to False.
     '''
     decAccbits = {}
-    # Decrypt access bits for all 4 blocks of a sector
+    # Decode access bits for all 4 blocks of the sector
     for i in range(0, 4):
         decAccbits[i] = accbits_for_blocknum(accbits, i)
     return decAccbits
