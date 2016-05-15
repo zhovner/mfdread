@@ -87,6 +87,7 @@ def accbit_info(accbits):
 def print_info(data):
 
     blocksmatrix = []
+    blockrights = {}
 
     # determine what dump we get 1k or 4k
     if len(data) == 4096:
@@ -109,10 +110,14 @@ def print_info(data):
 
     # add colors for each keyA, access bits, KeyB
     for c in range(0, len(blocksmatrix)):
+        # Fill in the access bits
+        blockrights[c] = accbit_info(BitArray('0x'+blocksmatrix[c][3][12:20]))
+        # Prepare colored output of the sector trailor
         keyA =  bashcolors.RED + blocksmatrix[c][3][0:12] + bashcolors.ENDC
         accbits = bashcolors.GREEN + blocksmatrix[c][3][12:20] + bashcolors.ENDC
         keyB =  bashcolors.BLUE + blocksmatrix[c][3][20:32] + bashcolors.ENDC
         blocksmatrix[c][3] = keyA + accbits + keyB
+
 
     print("File size: %d bytes. Expected %d sectors" %(len(data),cardsize))
     print("\n\tUID:  " + blocksmatrix[0][0][0:8])
@@ -120,21 +125,29 @@ def print_info(data):
     print("\tSAK:  " + blocksmatrix[0][0][10:12])
     print("\tATQA: " + blocksmatrix[0][0][12:14])
     print("                   %sKey A%s    %sAccess Bits%s    %sKey B%s" %(bashcolors.RED,bashcolors.ENDC,bashcolors.GREEN,bashcolors.ENDC,bashcolors.BLUE,bashcolors.ENDC))
-    print("╔═════════╦═════╦══════════════════════════════════╗")
-    print("║  Sector ║Block║            Data                  ║")
+    print("╔═════════╦═════╦══════════════════════════════════╦═══════════════╗")
+    print("║  Sector ║Block║            Data                  ║  Access Bits  ║")
     for q in range(0, len(blocksmatrix)):
-        print("╠═════════╬═════╬══════════════════════════════════╣")
+        print("╠═════════╬═════╬══════════════════════════════════╬═══════════════╣")
+
+        # z is the block in each sector
         for z in range(0, len(blocksmatrix[q])):
-            if (z == 2):
-                if (len(str(q)) == 1):
-                    print("║    %d    ║  %d  ║ %s ║"  %(q,z,blocksmatrix[q][z]))
-                if (len(str(q)) == 2):
-                    print("║    %d   ║  %d  ║ %s ║"  %(q,z,blocksmatrix[q][z]))
-                if (len(str(q)) == 3):
-                    print("║    %d ║  %d  ║ %s ║"  %(q,z,blocksmatrix[q][z]))
+            # Format the access bits. Print ERR in case of an error
+            accbits = ""
+            if isinstance(blockrights[q][z], BitArray):
+                accbits = bashcolors.GREEN + blockrights[q][z].bin + bashcolors.ENDC
             else:
-                print("║         ║  %d  ║ %s ║"  %(z,blocksmatrix[q][z]))
-    print("╚═════════╩═════╩══════════════════════════════════╝")
+                accbits = bashcolors.WARNING + "ERR" + bashcolors.ENDC
+
+            # Add Padding after the sector number
+            padLen = max(1, 5 - len(str(q)))
+            padding = " " * padLen
+            # Only print the sector number in the second third row
+            if (z == 2):
+                print("║    %d%s║  %d  ║ %s ║      %s      ║"  %(q,padding,z,blocksmatrix[q][z], accbits))
+            else:
+                print("║         ║  %d  ║ %s ║      %s      ║"  %(z,blocksmatrix[q][z], accbits))
+    print("╚═════════╩═════╩══════════════════════════════════╩═══════════════╝")
 
 
 def main(filename):
