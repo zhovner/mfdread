@@ -62,7 +62,7 @@ def accbits_for_blocknum(accbits_str, blocknum):
     # Check the access bits for the block and the inverted ones.
     inverted.invert()
     if bits.bin == inverted.bin:
-            return bits
+        return bits
     else:
         return False
 
