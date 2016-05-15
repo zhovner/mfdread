@@ -11,7 +11,7 @@ import codecs
 import sys
 from struct import unpack 
 from datetime import datetime
-
+from bitstring import BitArray
 
 
 if len(sys.argv) == 1:
@@ -31,6 +31,57 @@ class bashcolors:
     GREEN = '\033[32m'
     WARNING = '\033[93m'
     ENDC = '\033[0m'
+
+
+def accbits_for_blocknum(accbits_str, blocknum):
+    '''
+    Decodes the access bit string for block number blocknum.
+    Returns the three access bits for the block or False if the
+    inverted bis do not match the access bits.
+    '''
+    bits = BitArray([0])
+    inverted = BitArray([0])
+    # Block 0 access bits
+    if blocknum == 0:
+        bits = BitArray([accbits_str[11], accbits_str[23], accbits_str[19]])
+        inverted = BitArray([accbits_str[7], accbits_str[3], accbits_str[15]])
+
+    # Block 0 access bits
+    elif blocknum == 1:
+        bits = BitArray([accbits_str[10], accbits_str[22], accbits_str[18]])
+        inverted = BitArray([accbits_str[6], accbits_str[2], accbits_str[14]])
+    # Block 0 access bits
+    elif blocknum == 2:
+        bits = BitArray([accbits_str[9], accbits_str[21], accbits_str[17]])
+        inverted = BitArray([accbits_str[5], accbits_str[1], accbits_str[13]])
+    # Sector trailer / Block 3 access bits
+    elif blocknum == 3:
+        bits = BitArray([accbits_str[8], accbits_str[20], accbits_str[16]])
+        inverted = BitArray([accbits_str[4], accbits_str[0], accbits_str[12]])
+
+    # Check the access bits for the block and the inverted ones.
+    inverted.invert()
+    if bits.bin == inverted.bin:
+            return bits
+    else:
+        return False
+
+
+
+
+def accbit_info(accbits):
+    '''
+    Returns the a dictionary of the three access bits for all three blocks in the sector.
+    If the access bits for block could not be decoded properly it is set to False.
+    '''
+    decAccbits = {}
+    # Decrypt access bits for all 4 blocks of a sector
+    for i in range(0, 4):
+        decAccbits[i] = accbits_for_blocknum(accbits, i)
+    return decAccbits
+
+
+
 
 
 def print_info(data):
