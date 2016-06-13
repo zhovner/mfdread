@@ -184,7 +184,9 @@ def print_info(data):
             else:
                 accbits = bashcolors.WARNING + "ERR" + bashcolors.ENDC
 
-            if (z == 3):
+            if (q == 0):
+                permissions = "-"
+            elif (z == 3):
                 permissions = accbits_to_permission_sector(blockrights[q][z])
             else:
                 permissions = accbits_to_permission_data(blockrights[q][z])
