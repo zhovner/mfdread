@@ -75,7 +75,7 @@ def accbits_for_blocknum(accbits_str, blocknum):
         return False
 
 
-def accbits_to_permission(accbits):
+def accbits_to_permission_sector(accbits):
     permissions = {
         '000': "- A | A   - | A A [read B]",
         '010': "- - | A   - | A - [read B]",
@@ -85,6 +85,22 @@ def accbits_to_permission(accbits):
         '011': "- B | A/B B | - B",
         '101': "- - | A/B B | - -",
         '111': "- - | A/B - | - -",
+    }
+    if isinstance(accbits, BitArray):
+        return permissions.get(accbits.bin, "unknown")
+    else:
+        return ""
+
+def accbits_to_permission_data(accbits):
+    permissions = {
+        '000': "A/B | A/B   | A/B | A/B [transport]",
+        '010': "A/B |  -    |  -  |  -  [r/w]",
+        '100': "A/B |   B   |  -  |  -  [r/w]",
+        '110': "A/B |   B   |   B | A/B [value]",
+        '001': "A/B |  -    |  -  | A/B [value]",
+        '011': "  B |   B   |  -  |  -  [r/w]",
+        '101': "  B |  -    |  -  |  -  [r/w]",
+        '111': " -  |  -    |  -  |  -  [r/w]",
     }
     if isinstance(accbits, BitArray):
         return permissions.get(accbits.bin, "unknown")
@@ -152,11 +168,12 @@ def print_info(data):
     print("\tSAK:  " + blocksmatrix[0][0][10:12])
     print("\tATQA: " + blocksmatrix[0][0][12:14])
     print("                   %sKey A%s    %sAccess Bits%s    %sKey B%s" %(bashcolors.RED,bashcolors.ENDC,bashcolors.GREEN,bashcolors.ENDC,bashcolors.BLUE,bashcolors.ENDC))
-    print("╔═════════╦═════╦══════════════════════════════════╦════════╦═══════════════════════════════╗")
-    print("║  Sector ║Block║            Data                  ║ Access ║   A | Acc.  | B               ║")
-    print("║         ║     ║                                  ║        ║ r w | r   w | r w [info]      ║")
+    print("╔═════════╦═════╦══════════════════════════════════╦════════╦═════════════════════════════════════╗")
+    print("║  Sector ║Block║            Data                  ║ Access ║   A | Acc.  | B                     ║")
+    print("║         ║     ║                                  ║        ║ r w | r   w | r w [info]            ║")
+    print("║         ║     ║                                  ║        ║  r  |  w    |  i  | d/t/r           ║")
     for q in range(0, len(blocksmatrix)):
-        print("╠═════════╬═════╬══════════════════════════════════╬════════╬═══════════════════════════════╣")
+        print("╠═════════╬═════╬══════════════════════════════════╬════════╬═════════════════════════════════════╣")
 
         # z is the block in each sector
         for z in range(0, len(blocksmatrix[q])):
@@ -166,17 +183,21 @@ def print_info(data):
                 accbits = bashcolors.GREEN + blockrights[q][z].bin + bashcolors.ENDC
             else:
                 accbits = bashcolors.WARNING + "ERR" + bashcolors.ENDC
-            permissions = accbits_to_permission(blockrights[q][z])
+
+            if (z == 3):
+                permissions = accbits_to_permission_sector(blockrights[q][z])
+            else:
+                permissions = accbits_to_permission_data(blockrights[q][z])
 
             # Add Padding after the sector number
             padLen = max(1, 5 - len(str(q)))
             padding = " " * padLen
             # Only print the sector number in the second third row
             if (z == 2):
-                print("║    %d%s║  %d  ║ %s ║  %s   ║ %-29s ║ %s"  %(q,padding,z,blocksmatrix[q][z], accbits, permissions, d(blocksmatrix_clear[q][z])))
+                print("║    %d%s║  %d  ║ %s ║  %s   ║ %-35s ║ %s"  %(q,padding,z,blocksmatrix[q][z], accbits, permissions, d(blocksmatrix_clear[q][z])))
             else:
-                print("║         ║  %d  ║ %s ║  %s   ║ %-29s ║ %s"  %(z,blocksmatrix[q][z], accbits, permissions, d(blocksmatrix_clear[q][z])))
-    print("╚═════════╩═════╩══════════════════════════════════╩════════╩═══════════════════════════════╝")
+                print("║         ║  %d  ║ %s ║  %s   ║ %-35s ║ %s"  %(z,blocksmatrix[q][z], accbits, permissions, d(blocksmatrix_clear[q][z])))
+    print("╚═════════╩═════╩══════════════════════════════════╩════════╩═════════════════════════════════════╝")
 
 
 def main(args):
