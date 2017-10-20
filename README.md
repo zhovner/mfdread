@@ -74,7 +74,7 @@ PCD  | Proximity Coupling Device (“Contactless Reader”)
 PICC  | Proximity Integrated Circuit (“Contactless Card”)
 PKE  | Public Key Encryption (like RSA or ECC)
 REQA  | Request Command, Type A (command 0x26)
-WUPA | Wake-up type A (comand
+WUPA | Wake-up type A (command 0x52)
 SEL  | Select Command, Type A
 RFU  | Reserved for future use
 
