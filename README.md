@@ -54,11 +54,15 @@ Another example where access bits 6,7,8 are 0x78 0x77 0x88
 #### Terms
 Abbreviation  | Meaning 
 ------------- | -------------
+T=CL | ISO/IEC14443-4 protocol
 UID  | Unique Identifier, Type A
+RID  | Random ID, typically dynamically generated at Power-on Reset (UID0 = “0x08”, Random number in UID1… UID3)
 NUID  | Non-Unique Identifier
-ATQA  | Answer To Request acc. to ISO/IEC 14443-4
+ATQA  | Answer To Request, type A 
+ATQB  | Answer To Request, type B
 SAK  | Select Acknowledge, Type A
-ATS  | Answer To Select acc. to ISO/IEC 14443-4
+RATS | Request for Answer To Select
+ATS  | Answer To Select 
 ATR  | Anser To Reset [What's really ATR means](#ATR)
 APDU  | Application Protocol Data Unit
 DIF  | Dual Interface (cards)
@@ -69,9 +73,9 @@ NFC  | Near Field Communication
 PCD  | Proximity Coupling Device (“Contactless Reader”)
 PICC  | Proximity Integrated Circuit (“Contactless Card”)
 PKE  | Public Key Encryption (like RSA or ECC)
-REQA  | Request Command, Type A
-Select  | Select Command, Type A
-RID  | Random ID, typically dynamically generated at Power-on Reset (UID0 = “0x08”, Random number in UID1… UID3)
+REQA  | Request Command, Type A (command 0x26)
+WUPA | Wake-up type A (comand
+SEL  | Select Command, Type A
 RFU  | Reserved for future use
 
 
