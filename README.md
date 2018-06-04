@@ -79,8 +79,13 @@ SEL  | Select Command, Type A
 RFU  | Reserved for future use
 
 
+### SAK (Select Acknowledge, Type A) parsing
+The bit 6 in the SAK indicates, whether the PICC is compliant to the ISO/IEC14443-4 or not. However, it
+does not necessarily indicate, whether the PICC supports the MIFARE Protocol or not.
+![](https://i.imgur.com/TUPcVxn.png)
 
-### <a name="ATR"></a>What's really ATR means:
+
+### <a name="ATR"></a>What's really ATR means
 ATR is for contact cards and is specified in ISO 7816. For contacless cards, it is the PC/SC reader (IFD) that generates the ATR.
 
 The ATR is constructed based on:
