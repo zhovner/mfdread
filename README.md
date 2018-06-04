@@ -87,11 +87,11 @@ Bit 3 is cascade bit indicates that UID is not complete and additional select ne
 <img width="500" src="https://i.imgur.com/5BxyYcm.png" />
 
 
-
 The bit 6 in the SAK indicates, whether the PICC is compliant to the ISO/IEC14443-4 or not. However, it
 does not necessarily indicate, whether the PICC supports the MIFARE Protocol or not.  
 <img width="500" src="https://i.imgur.com/TUPcVxn.png" />
 
+Other bits in SAK (b1, b2, b4, b5, b7, b8) is not described in ISO 14443-3.  
 
 
 ### <a name="ATR"></a>What's really ATR means
