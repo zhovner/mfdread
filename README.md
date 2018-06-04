@@ -80,9 +80,18 @@ RFU  | Reserved for future use
 
 
 ### SAK (Select Acknowledge, Type A) parsing
+SAK response is 1 bytes length and 2 bytes CRC16.  
+<img width="300" src="https://i.imgur.com/NmUAYR4.png" />
+
+Bit 3 is cascade bit indicates that UID is not complete and additional select needed.  
+<img width="500" src="https://i.imgur.com/5BxyYcm.png" />
+
+
+
 The bit 6 in the SAK indicates, whether the PICC is compliant to the ISO/IEC14443-4 or not. However, it
-does not necessarily indicate, whether the PICC supports the MIFARE Protocol or not.
-![](https://i.imgur.com/TUPcVxn.png)
+does not necessarily indicate, whether the PICC supports the MIFARE Protocol or not.  
+<img width="500" src="https://i.imgur.com/TUPcVxn.png" />
+
 
 
 ### <a name="ATR"></a>What's really ATR means
