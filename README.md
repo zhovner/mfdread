@@ -54,7 +54,9 @@ Another example where access bits 6,7,8 are 0x78 0x77 0x88
 #### Terms
 Abbreviation  | Meaning 
 ------------- | -------------
-T=CL | ISO/IEC14443-4 protocol
+T=CL | ISO 14443-4 protocol
+T=0  | ISO 7816-3 character-level protocol
+T=1  | ISO 7816-3 block-level protocol
 UID  | Unique Identifier, Type A
 RID  | Random ID, typically dynamically generated at Power-on Reset (UID0 = “0x08”, Random number in UID1… UID3)
 NUID  | Non-Unique Identifier
