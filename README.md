@@ -5,9 +5,12 @@ Mifare Classic 1k and 4k dumps parser in human readable format.
 Dumps can be grabbed with [mfterm](https://github.com/4ZM/mfterm), [mfoc](https://github.com/nfc-tools/mfoc) or nfc-mfclassic tools from libnfc.org  
 Dump file size must be 1024 or 4096 bytes.
 
-Also try this https://github.com/asdil12/mifare-view-dump
-
 Included ```dump.mfd``` -- Mifare 4k dump for testing.  
+
+## Another tools
+ - [010 Editor](https://www.sweetscape.com/010editor/) — hex editor that has Mifare template. Very handy for editing `mfd` files.
+ - [mfterm](https://github.com/4ZM/mfterm) — Mifare terminal. Also can view and edit `mfd` dumps.
+
 #### Dependencies:
 ```easy_install bitstring```  
 or  
