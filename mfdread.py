@@ -136,7 +136,7 @@ def print_info(data):
     data_size = len(data)
 
     if data_size not in {4096, 1024, 320}:
-        sys.exit("Wrong file size: %d bytes.\nOnly 1024 or 4096 allowed." % len(data))
+        sys.exit("Wrong file size: %d bytes.\nOnly 320, 1024 or 4096 bytes allowed." % len(data))
 
     if Options.FORCE_1K:
         data_size = 1024
