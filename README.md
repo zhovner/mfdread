@@ -1,7 +1,7 @@
 Mifare dumps parser 
 =======
 
-Mifare Classic 1k and 4k dumps parser in human readable format.  
+Mifare Classic 1k/4k and Mifare Mini (320 bytes) dumps parser in human readable format.  
 Dumps can be grabbed with [mfterm](https://github.com/4ZM/mfterm), [mfoc](https://github.com/nfc-tools/mfoc) or nfc-mfclassic tools from libnfc.org  
 Dump file size must be 1024 or 4096 bytes.
 
