@@ -5,6 +5,8 @@
 #  Pavel Zhovner <pavel@zhovner.com>
 #  https://github.com/zhovner/mfdread
 
+#  Updated by li0ard
+#  https://github.com/li0ard/mfdread
 
 import codecs
 import copy
@@ -12,17 +14,22 @@ import sys
 from collections import defaultdict
 
 from bitstring import BitArray
+from datetime import date
 
 
 class Options:
     FORCE_1K = False
+    force = False
 
 
 if len(sys.argv) == 1:
     sys.exit('''
 ------------------
-Usage: mfdread.py ./dump.mfd
+Usage: mfdread.py [-f|-n] ./dump.mfd
 Mifare dumps reader.
+
+-n - No colors
+-f - Ignore file size
 ''')
 
 
@@ -38,6 +45,7 @@ class bashcolors:
     BLUE = '\033[34m'
     RED = '\033[91m'
     GREEN = '\033[32m'
+    VALUE = '\033[93m'
     WARNING = '\033[93m'
     ENDC = '\033[0m'
 
@@ -127,6 +135,15 @@ def accbit_info(accbits, sector_size):
         access_bits[i] = accbits_for_blocknum(accbits, i)
     return access_bits
 
+def isValueBlock(hexstr):
+    try:
+        b = bytes.fromhex(hexstr)
+        if b and len(b) == 16:
+            return (b[0] == b[8] and (b[0] ^ 0xFF) == b[4]) and (b[1] == b[9] and (b[1] ^ 0xFF) == b[5]) and (b[2] == b[10] and (b[2] ^ 0xFF) == b[6]) and (b[3] == b[11] and (b[3] ^ 0xFF) == b[7]) and (b[12] == b[14] and b[13] == b[15] and (b[12] ^ 0xFF) == b[13]);
+        return False
+    except:
+        return False
+
 
 def print_info(data):
     blocksmatrix = []
@@ -135,8 +152,9 @@ def print_info(data):
 
     data_size = len(data)
 
-    if data_size not in {4096, 1024, 320}:
-        sys.exit("Wrong file size: %d bytes.\nOnly 320, 1024 or 4096 bytes allowed." % len(data))
+    if not Options.force:
+        if data_size not in {4096, 1024, 320}:
+            sys.exit("Wrong file size: %d bytes.\nOnly 320, 1024 or 4096 bytes allowed." % len(data))
 
     if Options.FORCE_1K:
         data_size = 1024
@@ -190,6 +208,17 @@ def print_info(data):
     print("\tBCC:  " + blocksmatrix[0][0][8:10])
     print("\tSAK:  " + blocksmatrix[0][0][10:12])
     print("\tATQA: " + blocksmatrix[0][0][12:14])
+
+    try:
+        year = int(blocksmatrix[0][0][len(blocksmatrix[0][0])-2:])
+        week = int(blocksmatrix[0][0][len(blocksmatrix[0][0])-4:len(blocksmatrix[0][0])-2])
+        if year >= 0 and year <= date.today().year and week >= 1 and week <= 53:
+            print("\tYear of manufacture:  " + str(year + 2000))
+        else:
+            print("\tYear of manufacture:  --" )
+    except:
+        pass
+
     print("                   %sKey A%s    %sAccess Bits%s    %sKey B%s" % (
         bashcolors.RED, bashcolors.ENDC, bashcolors.GREEN, bashcolors.ENDC, bashcolors.BLUE, bashcolors.ENDC))
     print("╔═════════╦═══════╦══════════════════════════════════╦════════╦═════════════════════════════════════╗")
@@ -224,7 +253,12 @@ def print_info(data):
             else:
                 qn = ""
 
-            print("║    %-5s║  %-3d  ║ %s ║  %s   ║ %-35s ║ %s" % (qn, block_number, blocksmatrix[q][z],
+            if isValueBlock(blocksmatrix[q][z]):
+                print("║    %-5s║  %-3d  ║ %s%s%s ║  %s   ║ %-35s ║ %s" % (qn, block_number, bashcolors.VALUE, blocksmatrix[q][z], bashcolors.ENDC,
+                                                                   accbits, permissions,
+                                                                   decode(blocksmatrix_clear[q][z])))
+            else:
+                print("║    %-5s║  %-3d  ║ %s ║  %s   ║ %-35s ║ %s" % (qn, block_number, blocksmatrix[q][z],
                                                                    accbits, permissions,
                                                                    decode(blocksmatrix_clear[q][z])))
 
@@ -239,12 +273,17 @@ def main(args):
         bashcolors.BLUE = ""
         bashcolors.RED = ""
         bashcolors.GREEN = ""
+        bashcolors.VALUE = ""
         bashcolors.WARNING = ""
         bashcolors.ENDC = ""
 
     if args[0] == '-1':
         args.pop(0)
         Options.FORCE_1K = True
+
+    if args[0] == "-f":
+        args.pop(0)
+        Options.force = True
 
     filename = args[0]
     with open(filename, "rb") as f:
